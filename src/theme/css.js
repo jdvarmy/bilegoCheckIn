@@ -1,13 +1,14 @@
-const baseSize = 8;
+const baseSize = 8, borderRadius = 4;
 
 export default {
   sizes: {
-    base: `${baseSize}px`,
-    xs:   `${baseSize / 2}px`,
-    md:   `${baseSize * 2}px`,
-    lg:   `${baseSize * 3}px`, // 24
-    xl:   `${baseSize * 4}px`, // 32
-    xxl:  `${baseSize * 5}px`,
-    xxxl: `${baseSize * 6}px`,
+    borderRadius: borderRadius,
+    base: baseSize,
+    xs:   baseSize / 2,
+    md:   baseSize * 2,
+    lg:   baseSize * 3, // 24
+    xl:   baseSize * 4, // 32
+    xxl:  baseSize * 5,
+    xxxl: baseSize * 6,
   }
 };

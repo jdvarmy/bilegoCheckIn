@@ -10,8 +10,8 @@ import { AppNavigator } from './navigation/AppNavigator';
 import fonts from './theme/fonts';
 import theme from './theme/theme.json';
 
-const FrontUi = inject('store')(observer(
-  ({store:{isReady, setIsReady}}) => {
+const FrontUi = inject('appStore')(observer(
+  ({appStore:{isReady, setIsReady}}) => {
     if(!isReady){
       return (
         <AppLoading

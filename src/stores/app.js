@@ -4,7 +4,7 @@ configure({
   enforceActions: 'always'
 });
 
-class store{
+class app{
   @observable isReady = false;
 
   @action
@@ -14,4 +14,4 @@ class store{
 
 }
 
-export default new store();
+export default new app();

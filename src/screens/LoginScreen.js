@@ -2,18 +2,18 @@ import React from 'react';
 import { Layout, Text } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
-export const LoginScreen = () => {
+import { Login } from '../components/Login';
+
+export const LoginScreen = (props) => {
   return (
-    <Layout style={style.center}>
-      <Text>Login Screen</Text>
+    <Layout style={style.layout}>
+      <Login {...props} />
     </Layout>
   )
 };
 
 const style = StyleSheet.create({
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  layout: {
+    flex: 1
   }
 });
