@@ -1,21 +1,22 @@
 import React from 'react';
 import { AppLoading } from 'expo';
 import * as eva from '@eva-design/eva';
-import {inject, observer, Provider as MobxProvider} from 'mobx-react';
-import { ApplicationProvider } from '@ui-kitten/components';
+import { inject, observer, Provider as MobxProvider } from 'mobx-react';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 import * as stores from './stores';
 import { AppNavigator } from './navigation/AppNavigator';
 
-import fonts from './theme/fonts';
+import _loadAssetsAsync from './theme/_loadAssetsAsync';
 import theme from './theme/theme.json';
 
-const FrontUi = inject('appStore')(observer(
-  ({appStore:{isReady, setIsReady}}) => {
+const FrontUi = inject('appStore', 'loginStore')(observer(
+  ({appStore:{isReady, setIsReady}, loginStore:{setUserData}}) => {
     if(!isReady){
       return (
         <AppLoading
-          startAsync={fonts}
+          startAsync={ async () => { await _loadAssetsAsync(); await setUserData();}}
           onFinish={() => setIsReady(true)}
           onError={err => console.log(err)}
         />
@@ -23,9 +24,12 @@ const FrontUi = inject('appStore')(observer(
     }
 
     return (
-      <ApplicationProvider {...eva} theme={{...eva.dark, ...theme}}>
-        <AppNavigator />
-      </ApplicationProvider>
+      <>
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={{...eva.dark, ...theme}}>
+          <AppNavigator />
+        </ApplicationProvider>
+      </>
     )
   }
 ));
