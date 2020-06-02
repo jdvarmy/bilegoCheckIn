@@ -4,16 +4,14 @@ import { StyleSheet } from 'react-native';
 import {inject, observer} from "mobx-react";
 
 export const MainScreen = inject('loginStore')(observer(
-  ({loginStore}) => {
+  ({navigation}) => {
     const handlerPress = () => {
-      console.log(loginStore)
+      navigation.navigate('Scanner');
     };
 
   return (
     <Layout style={style.center}>
-      <Text>Main Screen</Text>
-      <Button onPress={handlerPress}>Login</Button>
-      <Button onPress={handlerPress}>Login</Button>
+      <Button onPress={handlerPress}>Start scanning</Button>
     </Layout>
   )
 }));

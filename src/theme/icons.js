@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Icon, Spinner } from '@ui-kitten/components';
 
 export const person = p => <Icon name="person-outline" {...p} />;
+export const arrowheadLeft = p => <Icon name="arrowhead-left-outline" {...p} />;
 
 export const LoadingIndicator = (p) => (
   <View style={[p.style, style.indicator]}>

@@ -5,8 +5,9 @@ import { Asset } from 'expo-asset';
 export default async function _loadAssetsAsync(){
 
   const imageAssets = cacheImages([
-    'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
     require('../components/Login/Bilego-logo-slogan_inverted.png'),
+    require('../../assets/super-hero.png'),
+    require('../../assets/fotogr.png'),
   ]);
 
   const fontAssets = cacheFonts([
