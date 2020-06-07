@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { inject, observer } from 'mobx-react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Layout, Text, Button, Icon } from '@ui-kitten/components';
-import { arrowheadLeft } from '../theme/icons';
+import { arrowheadLeft } from '../../theme/icons';
 
 export const ScanScreen = inject('scannerStore', 'loginStore')(observer(
   ({ scannerStore:{error, scanned, setScanned, hasPermission, setHasPermission, ticketCheck, qrCurrent, qrStatus}, loginStore:{user}, navigation }) => {

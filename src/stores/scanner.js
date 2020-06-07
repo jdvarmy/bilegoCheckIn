@@ -6,6 +6,11 @@ configure({
 });
 
 class scanner{
+  @observable show = false;
+  @action handlerShow = flag => {
+    this.show = flag;
+  };
+
   @observable isLoading = false;
   @observable scanned = 0;
   @observable qrStatus = [];
