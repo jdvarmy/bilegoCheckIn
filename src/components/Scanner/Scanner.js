@@ -7,7 +7,7 @@ import { Layout, Text, Icon } from '@ui-kitten/components';
 const { width } = Dimensions.get('screen');
 
 export const Scanner = inject('scannerStore', 'loginStore')(observer(
-  ({ scannerStore:{scanned, hasPermission, setHasPermission, ticketCheck}, loginStore:{user} }) => {
+  ({ scannerStore:{hasPermission, setHasPermission, ticketCheck}, loginStore:{user} }) => {
 
     useEffect(() => {
       (async () => {

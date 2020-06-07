@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, View, Dimensions, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { StyleSheet, View, Dimensions, TouchableOpacity, ScrollView, Vibration } from 'react-native';
 import { inject, observer } from 'mobx-react';
-import { Layout, Text, Button, Icon } from '@ui-kitten/components';
+import { Layout, Text, Button } from '@ui-kitten/components';
 import { arrowheadLeft } from '../../theme/icons';
 
 import css from '../../theme/css';
@@ -10,14 +9,14 @@ import css from '../../theme/css';
 const { width } = Dimensions.get('screen');
 
 export const ScanData = inject('scannerStore', 'loginStore')(observer(
-  ({ back, scannerStore:{error, scanned, setScanned, hasPermission, setHasPermission, ticketCheck, qrCurrent, qrStatus}, loginStore:{user} }) => {
+  ({ back, scannerStore:{error, scanned, setScanned, hasPermission, setHasPermission, ticketCheck, qrCurrent, qrStatus} }) => {
     const handlerPressBack = () => {
       back();
     };
 
     if (hasPermission === null || hasPermission === false) {
       return <Layout style={{...style.center, alignItems: 'flex-start'}}>
-        <View style={{flex: 1, }}>
+        <View style={{flex: 1}}>
           <Button
             style={style.buttonBack}
             onPress={handlerPressBack}
@@ -28,22 +27,9 @@ export const ScanData = inject('scannerStore', 'loginStore')(observer(
       </Layout>;
     }
 
-    const colors = {
-      basic: [
-        ['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.1)'],
-        ['rgba(255,255,255,0.3)', 'rgba(255,255,255,0.3)'],
-        ['rgba(255,255,255,0.6)', 'rgba(255,255,255,0.6)']
-      ],
-      alert: [
-        ['rgba(239,86,126,0.2)', 'rgba(246,37,90,0.2)'],
-        ['rgba(239,86,126,0.5)', 'rgba(246,37,90,0.5)'],
-        ['rgba(239,86,126,0.8)', 'rgba(246,37,90,0.8)']
-      ],
-      success: [
-        ['rgba(94,191,82,0.2)', 'rgba(68,191,32,0.2)'],
-        ['rgba(94,191,82,0.5)', 'rgba(68,191,32,0.5)'],
-        ['rgba(94,191,82,0.8)', 'rgba(68,191,32,0.8)']
-      ]
+    const handlerButton = () => {
+      setScanned(0)
+      // Vibration.vibrate([0, 20]);
     };
 
     const content = <>
@@ -74,15 +60,10 @@ export const ScanData = inject('scannerStore', 'loginStore')(observer(
     return (
       <Layout style={{...style.flex, width: width}}>
         <View style={style.flex}>
-          <Button
-            style={style.buttonBack}
-            onPress={handlerPressBack}
-            accessoryLeft={arrowheadLeft}
-            appearance='ghost'
-          />
+          <Button style={style.buttonBack} onPress={handlerPressBack} accessoryLeft={arrowheadLeft} appearance='ghost'/>
           <View style={style.container}>
             <View style={style.controlContainer}>
-              <Button style={style.button} onPress={() => setScanned(0)} status={scanned === 1 ? 'success' : scanned === -1 ? 'primary' : 'basic'}/>
+              <Button style={style.button} onPress={handlerButton} status={scanned === 1 ? 'success' : scanned === -1 ? 'primary' : 'basic'}/>
             </View>
             <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
               {qrStatus.slice().reverse().slice(0, 4).map( t =>
@@ -129,8 +110,8 @@ const style = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    width: 84,
-    height: 84,
+    width: 86,
+    height: 86,
     borderRadius: 200
   },
   buttonBack: {
