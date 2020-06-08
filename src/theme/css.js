@@ -3,7 +3,8 @@ const baseSize = 8, borderRadius = 4;
 export default {
   colors: {
     red: '#f6255a',
-    white: '#fff'
+    white: '#fff',
+    grey: 'rgba(255,255,255,0.4)'
   },
   sizes: {
     borderRadius: borderRadius,

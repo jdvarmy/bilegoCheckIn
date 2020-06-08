@@ -77,7 +77,6 @@ class MainScreen extends React.Component{
     this.timeout = setTimeout(() => {
       const {handlerShow} = this.props.scannerStore;
       handlerShow(true)
-      // this.props.navigation.navigate('Scanner');
 
     }, 900)
   };
@@ -98,7 +97,7 @@ class MainScreen extends React.Component{
           </Animated.View>
         </TapGestureHandler>
         <Text style={style.textBold} category="h1">BILEGO</Text>
-        <Text style={{...style.text, color: 'rgba(255,255,255,0.4)'}} category="s1">Тапните по лого, что бы начать сканировать</Text>
+        <Text style={{...style.text, color: css.colors.grey}} category="s1">Тапните по лого, что бы начать сканировать</Text>
         <ModalView back={this.back} />
       </Layout>
     )

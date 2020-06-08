@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions, TouchableOpacity, ScrollView, Vibration } from 'react-native';
+import { StyleSheet, View, Dimensions, ScrollView } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { Layout, Text, Button } from '@ui-kitten/components';
 import { arrowheadLeft } from '../../theme/icons';
@@ -9,7 +9,7 @@ import css from '../../theme/css';
 const { width } = Dimensions.get('screen');
 
 export const ScanData = inject('scannerStore', 'loginStore')(observer(
-  ({ back, scannerStore:{error, scanned, setScanned, hasPermission, setHasPermission, ticketCheck, qrCurrent, qrStatus} }) => {
+  ({ back, scannerStore:{error, scanned, setScanned, hasPermission, qrCurrent} }) => {
     const handlerPressBack = () => {
       back();
     };
@@ -29,32 +29,37 @@ export const ScanData = inject('scannerStore', 'loginStore')(observer(
 
     const handlerButton = () => {
       setScanned(0)
-      // Vibration.vibrate([0, 20]);
     };
 
     const content = <>
-      {qrCurrent.already_scan === true && <Text style={{...style.textBold, color:'#f6255a', paddingTop:0}} category="h6">Этот билет уже зарегистрирован</Text>}
-      <Text style={{...style.text,marginBottom:16}} category="h6">{qrCurrent.event}</Text>
-      {!qrCurrent.seat && <View style={{alignItems:'center'}}>
-        <Text style={{...style.text, ...style.ticket}} category="h5">{qrCurrent.name}</Text>
-      </View>}
-      {qrCurrent.seat &&
-      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-        <View style={{alignItems:'center'}}>
-          <Text style={style.s1} category="s1">Сектор</Text>
-          <Text category="h6" style={style.ticket}>{qrCurrent.sector}</Text>
-        </View>
-        <View style={{alignItems:'center'}}>
-          <Text style={style.s1} category="s1">Ряд</Text>
-          <Text category="h6" style={style.ticket}>{qrCurrent.row}</Text>
-        </View>
-        <View style={{alignItems:'center'}}>
-          <Text style={style.s1} category="s1">Место</Text>
-          <Text category="h6" style={style.ticket}>{qrCurrent.seat}</Text>
-        </View>
-      </View>
+      {qrCurrent.already_scan === true &&
+        <Text style={{...style.textBold, paddingTop:0}} category="h6">Этот билет уже зарегистрирован</Text>
       }
-      <Text style={{...style.text, marginTop:16}} category="c1">email покупателя: {qrCurrent.email}</Text>
+      <Text style={{...style.text, marginBottom: css.sizes.md}} category="h6">
+        {qrCurrent.event}
+      </Text>
+      {!qrCurrent.seat &&
+        <View style={style.align}>
+          <Text style={{...style.text, ...style.ticket}} category="h4">{qrCurrent.name}</Text>
+        </View>
+      }
+      {qrCurrent.seat &&
+        <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <View style={style.align}>
+            <Text style={style.s1} category="s1">Сектор</Text>
+            <Text category="h4" style={style.ticket}>{qrCurrent.sector}</Text>
+          </View>
+          <View style={style.align}>
+            <Text style={style.s1} category="s1">Ряд</Text>
+            <Text category="h4" style={style.ticket}>{qrCurrent.row}</Text>
+          </View>
+          <View style={style.align}>
+            <Text style={style.s1} category="s1">Место</Text>
+            <Text category="h4" style={style.ticket}>{qrCurrent.seat}</Text>
+          </View>
+        </View>
+      }
+      <Text style={{...style.text, marginTop: css.sizes.md}} category="h6">email покупателя: {qrCurrent.email}</Text>
     </>;
 
     return (
@@ -65,23 +70,16 @@ export const ScanData = inject('scannerStore', 'loginStore')(observer(
             <View style={style.controlContainer}>
               <Button style={style.button} onPress={handlerButton} status={scanned === 1 ? 'success' : scanned === -1 ? 'primary' : 'basic'}/>
             </View>
-            <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-              {qrStatus.slice().reverse().slice(0, 4).map( t =>
-                <Text style={{marginVertical:4}} category="h6" key={t.ticket_id}>
-                  {t.seat ? `${t.sector} / ${t.row} / ${t.seat}` : t.name}
-                </Text>
-              )}
-            </View>
           </View>
         </View>
-        <ScrollView style={{flex:1,marginBottom: 34}}>
+        <ScrollView style={{flex: 1, marginBottom: 34}}>
           <View>
             {
               error !== ''
-                ? <Text style={{...style.textBold, color:'#f6255a'}} category="h4">{error.message}</Text>
+                ? <Text style={style.textBold} category="h4">{error.message}</Text>
                 : qrCurrent
-                ? content
-                : <Text style={style.text} category="h2">Начните сканировать билеты и здесь появится информация</Text>
+                  ? content
+                  : <Text style={{...style.text, color: css.colors.grey}} category="h2">Информация о билете</Text>
             }
           </View>
         </ScrollView>
@@ -94,6 +92,14 @@ const style = StyleSheet.create({
   flex: {
     flex: 1
   },
+  view: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  align: {
+    alignItems: 'center',
+  },
   center: {
     flex: 1,
     justifyContent: 'center',
@@ -104,14 +110,15 @@ const style = StyleSheet.create({
     fontFamily: 'din-pro-bold',
     padding: 20,
     textAlign: 'center',
+    color: css.colors.red,
   },
   text: {
     fontFamily: 'din-pro-bold',
     textAlign: 'center',
   },
   button: {
-    width: 86,
-    height: 86,
+    width: 84,
+    height: 84,
     borderRadius: 200
   },
   buttonBack: {
@@ -121,8 +128,6 @@ const style = StyleSheet.create({
   container: {
     flexDirection: 'row-reverse',
     justifyContent: 'center',
-    marginRight: 10,
-    marginLeft: 40,
   },
   controlContainer: {
     overflow: 'hidden',
@@ -145,7 +150,7 @@ const style = StyleSheet.create({
   ticket: {
     paddingHorizontal:16,
     paddingVertical:8,
-    borderColor:'#f6255a',
+    borderColor: css.colors.red,
     borderWidth:2,
     borderStyle:'solid',
     borderRadius: 4,

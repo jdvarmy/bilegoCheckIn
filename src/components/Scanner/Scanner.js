@@ -4,10 +4,12 @@ import { inject, observer } from 'mobx-react';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Layout, Text, Icon } from '@ui-kitten/components';
 
+import css from '../../theme/css';
+
 const { width } = Dimensions.get('screen');
 
 export const Scanner = inject('scannerStore', 'loginStore')(observer(
-  ({ scannerStore:{hasPermission, setHasPermission, ticketCheck}, loginStore:{user} }) => {
+  ({ scannerStore:{hasPermission, setHasPermission, ticketCheck, scanned}, loginStore:{user} }) => {
 
     useEffect(() => {
       (async () => {
@@ -46,13 +48,13 @@ export const Scanner = inject('scannerStore', 'loginStore')(observer(
 
     return (
       <View style={{...style.center, width: width}}>
-        {/*<BarCodeScanner*/}
-        {/*  onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}*/}
-        {/*  style={StyleSheet.absoluteFillObject}*/}
-        {/*/>*/}
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={StyleSheet.absoluteFillObject}
+        />
         <View style={style.center}>
           <ImageBackground source={require('../../../assets/fotogr.png') }
-                           style={{...style.center, backgroundRepeat: 'no-repeat', resizeMode: 'cover'}}>
+                           style={{...style.center, backgroundRepeat: 'no-repeat', resizeMode: 'cover', paddingBottom: css.sizes.xs}}>
             <View style={style.camWrap}>
               <View style={style.row}>
                 <View style={{...style.border, borderRightWidth: 1}}/>
