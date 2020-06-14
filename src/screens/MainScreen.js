@@ -97,7 +97,7 @@ class MainScreen extends React.Component{
           </Animated.View>
         </TapGestureHandler>
         <Text style={style.textBold} category="h1">BILEGO</Text>
-        <Text style={{...style.text, color: css.colors.grey}} category="s1">Тапните по лого, что бы начать сканировать</Text>
+        <Text style={{...style.text, color: css.colors.grey}} category="s1">Нажмите на логотип, чтобы начать сканировать</Text>
         <ModalView back={this.back} />
       </Layout>
     )
