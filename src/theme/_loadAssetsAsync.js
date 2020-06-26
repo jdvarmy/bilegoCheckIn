@@ -6,7 +6,7 @@ export default async function _loadAssetsAsync(){
 
   const imageAssets = cacheImages([
     require('../components/Login/Bilego-logo-slogan_inverted.png'),
-    require('../../assets/super-hero.png'),
+    require('../../assets/splash.png'),
     require('../../assets/fotogr.png'),
   ]);
 

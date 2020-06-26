@@ -1,16 +1,15 @@
 import React from 'react';
 import { inject } from 'mobx-react';
-import { Layout } from '@ui-kitten/components';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 
 export const LoadingScreen = inject('loginStore')(
   ({ loginStore:{validate}, navigation }) => {
     validate(navigation);
 
     return (
-      <Layout style={style.center}>
-        <Image source={require('../../assets/super-hero.png')} style={style.image} />
-      </Layout>
+      <View style={style.center}>
+        <Image source={require('../../assets/splash.png')} style={style.image} />
+      </View>
     )
   });
 
@@ -23,6 +22,6 @@ const style = StyleSheet.create({
   image: {
     flex: 1,
     resizeMode: 'contain',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 });
